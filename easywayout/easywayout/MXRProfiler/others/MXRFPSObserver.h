@@ -10,4 +10,8 @@
 
 @interface MXRFPSObserver : NSObject
 
+@property (nonatomic, assign, readonly) NSInteger fpsRate;
+
+- (void)setPaused:(BOOL)paused;
+
 @end

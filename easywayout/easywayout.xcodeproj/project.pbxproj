@@ -64,6 +64,7 @@
 		5BBAAC651E2D265600B3A6B8 /* MXRProfilerSimpleInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAAC641E2D265600B3A6B8 /* MXRProfilerSimpleInfoViewController.m */; };
 		5BBAAC6A1E2D2B5F00B3A6B8 /* MXRProfilerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAAC691E2D2B5F00B3A6B8 /* MXRProfilerUtils.m */; };
 		9D42A5812DCF72F776577DB9 /* libPods-easywayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F87718C828F83B593E13D9B /* libPods-easywayout.a */; };
+		AAECC5AC1E2DB3ED007E662F /* MXRFPSObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = AAECC5AB1E2DB3ED007E662F /* MXRFPSObserver.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +188,9 @@
 		5BBAAC641E2D265600B3A6B8 /* MXRProfilerSimpleInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerSimpleInfoViewController.m; sourceTree = "<group>"; };
 		5BBAAC681E2D2B5F00B3A6B8 /* MXRProfilerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerUtils.h; sourceTree = "<group>"; };
 		5BBAAC691E2D2B5F00B3A6B8 /* MXRProfilerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerUtils.m; sourceTree = "<group>"; };
+		AAECC5A91E2DB220007E662F /* MXRProfilerMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerMacro.h; sourceTree = "<group>"; };
+		AAECC5AA1E2DB3ED007E662F /* MXRFPSObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRFPSObserver.h; sourceTree = "<group>"; };
+		AAECC5AB1E2DB3ED007E662F /* MXRFPSObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRFPSObserver.m; sourceTree = "<group>"; };
 		BA82C0B845A1DE85CBE9FB90 /* Pods-easywayout.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-easywayout.debug.xcconfig"; path = "Pods/Target Support Files/Pods-easywayout/Pods-easywayout.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -480,6 +484,7 @@
 				5BBAAC521E2D149A00B3A6B8 /* window */,
 				5BBAAC571E2D15D300B3A6B8 /* MXRProfilerTool.h */,
 				5BBAAC581E2D15D300B3A6B8 /* MXRProfilerTool.m */,
+				AAECC5A91E2DB220007E662F /* MXRProfilerMacro.h */,
 			);
 			path = MXRProfiler;
 			sourceTree = "<group>";
@@ -504,6 +509,8 @@
 				5BBAAC601E2D1F8000B3A6B8 /* MXRWeakProxy.m */,
 				5BBAAC681E2D2B5F00B3A6B8 /* MXRProfilerUtils.h */,
 				5BBAAC691E2D2B5F00B3A6B8 /* MXRProfilerUtils.m */,
+				AAECC5AA1E2DB3ED007E662F /* MXRFPSObserver.h */,
+				AAECC5AB1E2DB3ED007E662F /* MXRFPSObserver.m */,
 			);
 			path = others;
 			sourceTree = "<group>";
@@ -756,6 +763,7 @@
 				5B0E84351E1FDFF100F5CEBC /* MARRegisterViewController.m in Sources */,
 				5B58A4891E1BEC1E00713EB8 /* MARBaseViewController.m in Sources */,
 				5B58A4F01E1E94B600713EB8 /* MARBaseDBModel.m in Sources */,
+				AAECC5AC1E2DB3ED007E662F /* MXRFPSObserver.m in Sources */,
 				5B8215681E1846EB0070BA88 /* main.m in Sources */,
 				5BBAAC5C1E2D19D600B3A6B8 /* MXRProfilerContainerViewController.m in Sources */,
 				5B58A48B1E1BEC1E00713EB8 /* MARUserDefault.m in Sources */,

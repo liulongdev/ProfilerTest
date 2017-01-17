@@ -9,6 +9,7 @@
 #import "MXRProfilerSimpleInfoViewController.h"
 #import "MXRProfilerUtils.h"
 #import "MXRWeakProxy.h"
+#import "MXRFPSObserver.h"
 @interface MXRProfilerSimpleInfoViewController ()
 @property (nonatomic, strong) UIButton *tapButton;
 @property (nonatomic, strong) UILabel *infoLabel;
@@ -17,7 +18,9 @@
 @end
 
 @implementation MXRProfilerSimpleInfoViewController
-
+{
+    MXRFPSObserver *_fpsObserver;
+}
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.view addSubview:self.infoLabel];
@@ -26,6 +29,8 @@
     [self.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     [self.timer fire];
+    
+    _fpsObserver = [[MXRFPSObserver alloc] init];
 }
 
 - (void)dealloc
@@ -80,7 +85,12 @@
 
 - (void)_updateInfo
 {
-    self.infoLabel.text = [self.byteFormatter stringFromByteCount:MXRProfilerResidentMemoryInBytes()];
+    NSMutableString *mutableString = [NSMutableString string];
+    [mutableString appendFormat:@"mem:%@", [self.byteFormatter stringFromByteCount:MXRProfilerResidentMemoryInBytes()]];
+    [mutableString appendFormat:@"cpu:%.2f%%", MXRProfiler_CpuUsedPercent()];
+    [mutableString appendFormat:@"\nfps:%ld", _fpsObserver.fpsRate];
+    [mutableString appendFormat:@"\nmem:%.f%%", MXRProfiler_MemoryUsedPercent() * 100];
+    self.infoLabel.text = mutableString;
 }
 
 #pragma mark - KVO
