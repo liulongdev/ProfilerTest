@@ -31,7 +31,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.infoLabel];
     [self.view addSubview:self.tapButton];
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = RGBAHEX(0x000000, 0.6);
     [self.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
     [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     [self.timer fire];
