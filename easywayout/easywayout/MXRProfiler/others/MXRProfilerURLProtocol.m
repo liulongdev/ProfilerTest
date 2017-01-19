@@ -66,7 +66,7 @@
     [self.client URLProtocolDidFinishLoading:self];
     
     if (connection.originalRequest) {
-        NSLog(@"endtime: %f \nrequestSize:%ld \nresponseSize:%ld \ncontentType:%@", [[NSDate date] timeIntervalSince1970], connection.originalRequest.HTTPBody.length, self.cachedResponse.data.length, connection.originalRequest.allHTTPHeaderFields);
+        NSLog(@"endtime: %f \nrequestSize:%lu \nresponseSize:%lu \ncontentType:%@", [[NSDate date] timeIntervalSince1970], connection.originalRequest.HTTPBody.length, self.cachedResponse.data.length, connection.originalRequest.allHTTPHeaderFields);
     }
 }
 
