@@ -64,6 +64,8 @@
 		5BBAAC651E2D265600B3A6B8 /* MXRProfilerSimpleInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAAC641E2D265600B3A6B8 /* MXRProfilerSimpleInfoViewController.m */; };
 		5BBAAC6A1E2D2B5F00B3A6B8 /* MXRProfilerUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAAC691E2D2B5F00B3A6B8 /* MXRProfilerUtils.m */; };
 		9D42A5812DCF72F776577DB9 /* libPods-easywayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F87718C828F83B593E13D9B /* libPods-easywayout.a */; };
+		AAEA27FA1E3054C000722A88 /* MXRMonitorRunloop.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEA27F91E3054C000722A88 /* MXRMonitorRunloop.m */; };
+		AAEA27FD1E305D1300722A88 /* MXRCallStack.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEA27FC1E305D1300722A88 /* MXRCallStack.m */; };
 		AAECC5AC1E2DB3ED007E662F /* MXRFPSObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = AAECC5AB1E2DB3ED007E662F /* MXRFPSObserver.m */; };
 /* End PBXBuildFile section */
 
@@ -188,6 +190,10 @@
 		5BBAAC641E2D265600B3A6B8 /* MXRProfilerSimpleInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerSimpleInfoViewController.m; sourceTree = "<group>"; };
 		5BBAAC681E2D2B5F00B3A6B8 /* MXRProfilerUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerUtils.h; sourceTree = "<group>"; };
 		5BBAAC691E2D2B5F00B3A6B8 /* MXRProfilerUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerUtils.m; sourceTree = "<group>"; };
+		AAEA27F81E3054BF00722A88 /* MXRMonitorRunloop.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRMonitorRunloop.h; sourceTree = "<group>"; };
+		AAEA27F91E3054C000722A88 /* MXRMonitorRunloop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRMonitorRunloop.m; sourceTree = "<group>"; };
+		AAEA27FB1E305D1300722A88 /* MXRCallStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRCallStack.h; sourceTree = "<group>"; };
+		AAEA27FC1E305D1300722A88 /* MXRCallStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRCallStack.m; sourceTree = "<group>"; };
 		AAECC5A91E2DB220007E662F /* MXRProfilerMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerMacro.h; sourceTree = "<group>"; };
 		AAECC5AA1E2DB3ED007E662F /* MXRFPSObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRFPSObserver.h; sourceTree = "<group>"; };
 		AAECC5AB1E2DB3ED007E662F /* MXRFPSObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRFPSObserver.m; sourceTree = "<group>"; };
@@ -511,6 +517,10 @@
 				5BBAAC691E2D2B5F00B3A6B8 /* MXRProfilerUtils.m */,
 				AAECC5AA1E2DB3ED007E662F /* MXRFPSObserver.h */,
 				AAECC5AB1E2DB3ED007E662F /* MXRFPSObserver.m */,
+				AAEA27F81E3054BF00722A88 /* MXRMonitorRunloop.h */,
+				AAEA27F91E3054C000722A88 /* MXRMonitorRunloop.m */,
+				AAEA27FB1E305D1300722A88 /* MXRCallStack.h */,
+				AAEA27FC1E305D1300722A88 /* MXRCallStack.m */,
 			);
 			path = others;
 			sourceTree = "<group>";
@@ -729,10 +739,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AAEA27FA1E3054C000722A88 /* MXRMonitorRunloop.m in Sources */,
 				5B58A5011E1EB17A00713EB8 /* MARAddVehicleViewController.m in Sources */,
 				5B58A48A1E1BEC1E00713EB8 /* MARGlobalManager.m in Sources */,
 				5BBAAC611E2D1F8000B3A6B8 /* MXRWeakProxy.m in Sources */,
 				5B0E842F1E1EC2B100F5CEBC /* UINavigationController+MarExtension.m in Sources */,
+				AAEA27FD1E305D1300722A88 /* MXRCallStack.m in Sources */,
 				5B82156E1E1846EB0070BA88 /* ViewController.mm in Sources */,
 				5B0E844D1E218B9000F5CEBC /* NSObject+MarExtension.m in Sources */,
 				5B58A4FE1E1EB10A00713EB8 /* MARPrepareAddVehicleViewController.m in Sources */,

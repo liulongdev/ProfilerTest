@@ -11,6 +11,8 @@
 #import "MXRProfilerWindowTouchesHandling.h"
 #import "MXRProfilerContainerViewController.h"
 #import "MXRProfilerSimpleInfoViewController.h"
+#import "MXRMonitorRunloop.h"
+
 static const NSUInteger kFBFloatingButtonSize = 100.0;
 
 @interface MXRProfilerTool() <MXRProfilerWindowTouchesHandling>
@@ -48,6 +50,7 @@ static const NSUInteger kFBFloatingButtonSize = 100.0;
     [_containerViewController presentViewController:_simpleInfoViewController
                                            withSize:CGSizeMake(kFBFloatingButtonSize,
                                                                kFBFloatingButtonSize)];
+    [[MXRMonitorRunloop sharedInstance] startMonitor];
 }
 
 - (void)endAnalyze
