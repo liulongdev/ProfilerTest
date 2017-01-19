@@ -11,11 +11,17 @@
 
 #import <pthread.h>
 
-#ifndef RGB
-#define RGB(r, g, b)    [UIColor colorWithRed:(r)/255.f green:(g)/255.f blue:(b)/255.f alpha:1.f]
+#ifndef RGBHEX
+#define RGBHEX(_hex)    [UIColor \
+                            colorWithRed:((float)((_hex & 0xFF0000) >> 16))/255.0 \
+                            green:((float)((_hex & 0xFF00) >> 8))/255.0 \
+                            blue:((float)(_hex & 0xFF))/255.0 alpha:1]
 #endif
-#ifndef RGBA
-#define RGBA(r, g, b, a)    [UIColor colorWithRed:(r)/255.f green:(g)/255.f blue:(b)/255.f alpha:a]
+#ifndef RGBHEXA
+#define RGBHEXA(_hex, _alpha)    [UIColor \
+                                colorWithRed:((float)((_hex & 0xFF0000) >> 16))/255.0 \
+                                green:((float)((_hex & 0xFF00) >> 8))/255.0 \
+                                blue:((float)(_hex & 0xFF))/255.0 alpha:_alpha]
 #endif
 
 /**

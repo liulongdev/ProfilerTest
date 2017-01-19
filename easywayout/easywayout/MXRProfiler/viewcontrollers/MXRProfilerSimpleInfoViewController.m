@@ -148,7 +148,7 @@
 {
     NSMutableString *mutableString = [NSMutableString string];
 //    [mutableString appendFormat:@"mem:%@", [self.byteFormatter stringFromByteCount:MXRProfilerResidentMemoryInBytes()]];
-    [mutableString appendFormat:@"cpu:%.2f%%", self.cpuUsed];
+    [mutableString appendFormat:@"cpu:%.f%%", self.cpuUsed * 100];
     [mutableString appendFormat:@"\nfps:%ld", self.fpsRate];
     [mutableString appendFormat:@"\nmem:%.f%%", self.memoryUsed * 100];
     self.infoLabel.text = mutableString;

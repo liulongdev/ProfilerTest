@@ -24,6 +24,9 @@ BMKMapManager *_mapManager;
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    _profilerTool = [[MXRProfilerTool alloc] init];
+    [_profilerTool startAnalyze];
+    
     // Override point for customization after application launch.
     [self initAppearance];  
     
@@ -35,8 +38,6 @@ BMKMapManager *_mapManager;
 //                               retainCycleDetectorConfiguration:nil];
 //    [_memoryProfiler enable];
 
-    _profilerTool = [[MXRProfilerTool alloc] init];
-    [_profilerTool startAnalyze];
     return YES;
 }
 
