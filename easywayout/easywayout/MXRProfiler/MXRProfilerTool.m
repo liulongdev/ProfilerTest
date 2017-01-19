@@ -12,6 +12,7 @@
 #import "MXRProfilerContainerViewController.h"
 #import "MXRProfilerSimpleInfoViewController.h"
 #import "MXRMonitorRunloop.h"
+#import "MXRProfilerURLProtocol.h"
 
 static const NSUInteger kFBFloatingButtonSize = 100.0;
 
@@ -51,11 +52,13 @@ static const NSUInteger kFBFloatingButtonSize = 100.0;
                                            withSize:CGSizeMake(kFBFloatingButtonSize,
                                                                kFBFloatingButtonSize)];
     [[MXRMonitorRunloop sharedInstance] startMonitor];
+    [NSURLProtocol registerClass:[MXRProfilerURLProtocol class]];
 }
 
 - (void)endAnalyze
 {
-    
+    [[MXRMonitorRunloop sharedInstance] endMonitor];
+    [NSURLProtocol unregisterClass:[MXRProfilerURLProtocol class]];
 }
 
 #pragma mark - MXRProfilerWindowTouchesHandling

@@ -8,6 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-@interface MXRProfilerURLProtocol : NSURLProtocol <NSURLConnectionDataDelegate>
+@interface MXRProfilerURLProtocol : NSURLProtocol
 
 @end
