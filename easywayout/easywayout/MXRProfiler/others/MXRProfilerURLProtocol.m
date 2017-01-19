@@ -83,3 +83,6 @@
 - (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
     [self.client URLProtocolDidFinishLoading:self];
 }
+
+@end
+
