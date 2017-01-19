@@ -33,11 +33,13 @@
     [self.view addSubview:self.tapButton];
     self.view.backgroundColor = RGBAHEX(0x000000, 0.6);
     [self.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
-    [[NSRunLoop mainRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
     [self.timer fire];
     
     _fpsObserver = [[MXRFPSObserver alloc] init];
     [_fpsObserver addObserver:self forKeyPath:@"fpsRate" options:NSKeyValueObservingOptionNew context:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mxr_applicationWillResignActive:) name:UIApplicationWillResignActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(mxr_applicationDidBecomeActive:) name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -58,6 +60,17 @@
     _timer = nil;
     [self.view removeObserver:self forKeyPath:@"frame"];
     [_fpsObserver removeObserver:self forKeyPath:@"fpsRate"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)mxr_applicationWillResignActive:(NSNotification *)noti
+{
+    [_timer invalidate];
+}
+
+- (void)mxr_applicationDidBecomeActive:(NSNotification *)noti
+{
+    [self.timer fire];
 }
 
 - (NSTimer *)timer
@@ -65,6 +78,7 @@
     if (!_timer || ![_timer isValid]) {
         _timer = nil;
         _timer = [NSTimer timerWithTimeInterval:1.f target:[MXRWeakProxy proxyWithTarget:self] selector:@selector(_updateInfo) userInfo:nil repeats:YES];
+        [[NSRunLoop mainRunLoop] addTimer:_timer forMode:NSRunLoopCommonModes];
     }
     return _timer;
 }

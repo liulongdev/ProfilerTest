@@ -66,6 +66,7 @@
 		9D42A5812DCF72F776577DB9 /* libPods-easywayout.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F87718C828F83B593E13D9B /* libPods-easywayout.a */; };
 		AAEA27FA1E3054C000722A88 /* MXRMonitorRunloop.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEA27F91E3054C000722A88 /* MXRMonitorRunloop.m */; };
 		AAEA27FD1E305D1300722A88 /* MXRCallStack.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEA27FC1E305D1300722A88 /* MXRCallStack.m */; };
+		AAEA28391E30B6AC00722A88 /* MXRProfilerURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = AAEA28381E30B6AC00722A88 /* MXRProfilerURLProtocol.m */; };
 		AAECC5AC1E2DB3ED007E662F /* MXRFPSObserver.m in Sources */ = {isa = PBXBuildFile; fileRef = AAECC5AB1E2DB3ED007E662F /* MXRFPSObserver.m */; };
 /* End PBXBuildFile section */
 
@@ -194,6 +195,8 @@
 		AAEA27F91E3054C000722A88 /* MXRMonitorRunloop.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRMonitorRunloop.m; sourceTree = "<group>"; };
 		AAEA27FB1E305D1300722A88 /* MXRCallStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRCallStack.h; sourceTree = "<group>"; };
 		AAEA27FC1E305D1300722A88 /* MXRCallStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRCallStack.m; sourceTree = "<group>"; };
+		AAEA28371E30B6AB00722A88 /* MXRProfilerURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerURLProtocol.h; sourceTree = "<group>"; };
+		AAEA28381E30B6AC00722A88 /* MXRProfilerURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerURLProtocol.m; sourceTree = "<group>"; };
 		AAECC5A91E2DB220007E662F /* MXRProfilerMacro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerMacro.h; sourceTree = "<group>"; };
 		AAECC5AA1E2DB3ED007E662F /* MXRFPSObserver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRFPSObserver.h; sourceTree = "<group>"; };
 		AAECC5AB1E2DB3ED007E662F /* MXRFPSObserver.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRFPSObserver.m; sourceTree = "<group>"; };
@@ -521,6 +524,8 @@
 				AAEA27F91E3054C000722A88 /* MXRMonitorRunloop.m */,
 				AAEA27FB1E305D1300722A88 /* MXRCallStack.h */,
 				AAEA27FC1E305D1300722A88 /* MXRCallStack.m */,
+				AAEA28371E30B6AB00722A88 /* MXRProfilerURLProtocol.h */,
+				AAEA28381E30B6AC00722A88 /* MXRProfilerURLProtocol.m */,
 			);
 			path = others;
 			sourceTree = "<group>";
@@ -773,6 +778,7 @@
 				5B58A5041E1EB2C700713EB8 /* MARVehicleDBM.m in Sources */,
 				5B58A4E81E1D5AC600713EB8 /* MARMainViewController.m in Sources */,
 				5B0E84351E1FDFF100F5CEBC /* MARRegisterViewController.m in Sources */,
+				AAEA28391E30B6AC00722A88 /* MXRProfilerURLProtocol.m in Sources */,
 				5B58A4891E1BEC1E00713EB8 /* MARBaseViewController.m in Sources */,
 				5B58A4F01E1E94B600713EB8 /* MARBaseDBModel.m in Sources */,
 				AAECC5AC1E2DB3ED007E662F /* MXRFPSObserver.m in Sources */,
