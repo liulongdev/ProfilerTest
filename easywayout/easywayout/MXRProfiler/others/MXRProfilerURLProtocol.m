@@ -7,15 +7,24 @@
 //
 
 #import "MXRProfilerURLProtocol.h"
+#import "MXRWeakProxy.h"
 
-@interface MXRProfilerURLProtocol() <NSURLSessionDelegate>
-@property (nonnull,strong) NSURLSessionDataTask *task;
+NSString *const MXRPROfilerURLProkey = @"MXRPROfilerURLProkey";
+
+@interface MXRProfilerURLProtocol() <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+
+@property (nonatomic,strong) NSURLConnection *connection;
+
 @end
 
 @implementation MXRProfilerURLProtocol
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
+    if ([NSURLProtocol propertyForKey:MXRPROfilerURLProkey inRequest:request]) {
+        return NO;
+    }
+    NSLog(@">> url : %@", request.URL.absoluteString);
     return YES;
 }
 
@@ -36,13 +45,16 @@
 
 - (void)startLoading;
 {
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
-    self.task = [session dataTaskWithRequest:self.request];
-    [self.task resume];
-    //    NSMutableURLRequest *mutableReqeust = [[self request] mutableCopy];
+    //    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:nil];
+    //    self.task = [session dataTaskWithRequest:self.request];
+    //    [self.task resume];
+    NSMutableURLRequest *mutableReqeust = [[self request] mutableCopy];
     //    //标示改request已经处理过了，防止无限循环
-    //    [NSURLProtocol setProperty:@YES forKey:@"MXRPROfilerURLProkey" inRequest:mutableReqeust];
+    [NSURLProtocol setProperty:@YES forKey:MXRPROfilerURLProkey inRequest:mutableReqeust];
     //    self.connection = [NSURLConnection connectionWithRequest:mutableReqeust delegate:self];
+    
+    self.connection = [NSURLConnection connectionWithRequest:mutableReqeust delegate:[MXRWeakProxy proxyWithTarget:self]];
+
 }
 
 /*!
@@ -55,9 +67,8 @@
  */
 - (void)stopLoading
 {
-    if (self.task != nil)
-    {
-        [self.task  cancel];
+    if (self.connection) {
+        [self.connection cancel];
     }
 }
 
@@ -66,23 +77,88 @@
     [self.client URLProtocolDidFinishLoading:self];
     
     if (connection.originalRequest) {
-        NSLog(@"endtime: %f \nrequestSize:%lu \nresponseSize:%lu \ncontentType:%@", [[NSDate date] timeIntervalSince1970], connection.originalRequest.HTTPBody.length, self.cachedResponse.data.length, connection.originalRequest.allHTTPHeaderFields);
+        NSLog(@"self : %p, self.connection : %p , connection : %p, endtime: %f \nrequestSize:%lu \ncontentType:%@",self, self.connection, connection, [[NSDate date] timeIntervalSince1970], connection.originalRequest.HTTPBody.length, connection.originalRequest.allHTTPHeaderFields);
     }
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveResponse:(NSURLResponse *)response completionHandler:(void (^)(NSURLSessionResponseDisposition))completionHandler {
-    [[self client] URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
-    
-    completionHandler(NSURLSessionResponseAllow);
+
+-(void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
+    //开始接收数据
+    [self.client URLProtocol:self didReceiveResponse:response cacheStoragePolicy:NSURLCacheStorageAllowed];
+}
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+    //正在接收数据
+
+    [self.client URLProtocol:self didLoadData:data];
+}
+-(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    //接收数据失败
+    NSLog(@"%@",error);
+    [self.client URLProtocol:self didFailWithError:error];
 }
 
-- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask didReceiveData:(NSData *)data {
-    [[self client] URLProtocol:self didLoadData:data];
-}
-
-- (void)URLSession:(NSURLSession *)session task:(NSURLSessionTask *)task didCompleteWithError:(nullable NSError *)error {
-    [self.client URLProtocolDidFinishLoading:self];
-}
 
 @end
 
+@implementation MXRProfilerVCURLManager
+
++ (instancetype)sharedInstance
+{
+    SINGLE_INSTANCE_USING_BLOCK(^{
+        return [[self alloc] init];
+    });
+}
+
+- (void)addURLInfo:(MXRProfilerURLInfo *)_urlInfo
+{
+    _urlInfo.VCClassString = self.currentVCClassName;
+    _urlInfo.VCTitle = self.currentVCTitle;
+    NSUInteger index = [self.URLInfoArray indexOfObject:_urlInfo];
+    if (index == NSNotFound) {
+        MXRProfilerURLInfo *urlInfo = [_urlInfo copy];
+        [self.URLInfoArray addObject:urlInfo];
+    }
+    else
+    {
+        MXRProfilerURLInfo *urlInfo = [self.URLInfoArray objectAtIndex:index];
+        urlInfo.requestSize += _urlInfo.requestSize;
+        urlInfo.responseSize += _urlInfo.responseSize;
+        urlInfo.requestCount ++;
+    }
+}
+
+- (void)updateURLInfo:(MXRProfilerURLInfo *)_urlInfo
+{
+    _urlInfo.VCClassString = self.currentVCClassName;
+    _urlInfo.VCTitle = self.currentVCTitle;
+    NSUInteger index = [self.URLInfoArray indexOfObject:_urlInfo];
+    if (index == NSNotFound) {
+        MXRProfilerURLInfo *urlInfo = [_urlInfo copy];
+        [self.URLInfoArray addObject:urlInfo];
+    }
+    else
+    {
+        MXRProfilerURLInfo *urlInfo = [self.URLInfoArray objectAtIndex:index];
+        urlInfo.responseSize += _urlInfo.responseSize;
+    }
+}
+
+- (NSMutableArray *)URLInfoArray
+{
+    if (!_URLInfoArray) {
+        _URLInfoArray = [NSMutableArray array];
+    }
+    return _URLInfoArray;
+}
+
+- (NSString *)currentVCTitle
+{
+    return _currentVCTitle ?: @"";
+}
+
+- (NSString *)currentVCClassName
+{
+    return _currentVCClassName ?: @"";
+}
+
+@end

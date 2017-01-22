@@ -55,6 +55,8 @@
 		5B8215761E1846EB0070BA88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8215741E1846EB0070BA88 /* LaunchScreen.storyboard */; };
 		5B8215811E1846EC0070BA88 /* easywayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8215801E1846EC0070BA88 /* easywayoutTests.m */; };
 		5B82158C1E1846EC0070BA88 /* easywayoutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B82158B1E1846EC0070BA88 /* easywayoutUITests.m */; };
+		5B8EEF141E348CD80088FB0F /* UIViewController+MXRProfier.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8EEF131E348CD80088FB0F /* UIViewController+MXRProfier.m */; };
+		5B8EEF1D1E34AB480088FB0F /* MXRProfilerURLInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8EEF1C1E34AB480088FB0F /* MXRProfilerURLInfo.m */; };
 		5BBAAC4B1E2CFC8600B3A6B8 /* CacheCleanerPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAAC481E2CFC8600B3A6B8 /* CacheCleanerPlugin.m */; };
 		5BBAAC4C1E2CFC8600B3A6B8 /* RetainCycleLoggerPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAAC4A1E2CFC8600B3A6B8 /* RetainCycleLoggerPlugin.m */; };
 		5BBAAC551E2D149A00B3A6B8 /* MXRProfilerWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAAC541E2D149A00B3A6B8 /* MXRProfilerWindow.m */; };
@@ -173,6 +175,10 @@
 		5B82158B1E1846EC0070BA88 /* easywayoutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = easywayoutUITests.m; sourceTree = "<group>"; };
 		5B82158D1E1846EC0070BA88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B8215991E18504D0070BA88 /* easywayout-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "easywayout-Prefix.pch"; sourceTree = "<group>"; };
+		5B8EEF121E348CD80088FB0F /* UIViewController+MXRProfier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MXRProfier.h"; sourceTree = "<group>"; };
+		5B8EEF131E348CD80088FB0F /* UIViewController+MXRProfier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MXRProfier.m"; sourceTree = "<group>"; };
+		5B8EEF1B1E34AB480088FB0F /* MXRProfilerURLInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerURLInfo.h; sourceTree = "<group>"; };
+		5B8EEF1C1E34AB480088FB0F /* MXRProfilerURLInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerURLInfo.m; sourceTree = "<group>"; };
 		5BBAAC471E2CFC8600B3A6B8 /* CacheCleanerPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheCleanerPlugin.h; sourceTree = "<group>"; };
 		5BBAAC481E2CFC8600B3A6B8 /* CacheCleanerPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheCleanerPlugin.m; sourceTree = "<group>"; };
 		5BBAAC491E2CFC8600B3A6B8 /* RetainCycleLoggerPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RetainCycleLoggerPlugin.h; sourceTree = "<group>"; };
@@ -478,6 +484,15 @@
 			path = easywayoutUITests;
 			sourceTree = "<group>";
 		};
+		5B8EEF1A1E34AB130088FB0F /* model */ = {
+			isa = PBXGroup;
+			children = (
+				5B8EEF1B1E34AB480088FB0F /* MXRProfilerURLInfo.h */,
+				5B8EEF1C1E34AB480088FB0F /* MXRProfilerURLInfo.m */,
+			);
+			path = model;
+			sourceTree = "<group>";
+		};
 		5BBAAC4D1E2D097400B3A6B8 /* MXRmonitorTool */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +503,7 @@
 		5BBAAC4E1E2D132100B3A6B8 /* MXRProfiler */ = {
 			isa = PBXGroup;
 			children = (
+				5B8EEF1A1E34AB130088FB0F /* model */,
 				5BBAAC621E2D263700B3A6B8 /* viewcontrollers */,
 				5BBAAC5E1E2D1F5E00B3A6B8 /* others */,
 				5BBAAC521E2D149A00B3A6B8 /* window */,
@@ -526,6 +542,8 @@
 				AAEA27FC1E305D1300722A88 /* MXRCallStack.m */,
 				AAEA28371E30B6AB00722A88 /* MXRProfilerURLProtocol.h */,
 				AAEA28381E30B6AC00722A88 /* MXRProfilerURLProtocol.m */,
+				5B8EEF121E348CD80088FB0F /* UIViewController+MXRProfier.h */,
+				5B8EEF131E348CD80088FB0F /* UIViewController+MXRProfier.m */,
 			);
 			path = others;
 			sourceTree = "<group>";
@@ -751,6 +769,7 @@
 				5B0E842F1E1EC2B100F5CEBC /* UINavigationController+MarExtension.m in Sources */,
 				AAEA27FD1E305D1300722A88 /* MXRCallStack.m in Sources */,
 				5B82156E1E1846EB0070BA88 /* ViewController.mm in Sources */,
+				5B8EEF141E348CD80088FB0F /* UIViewController+MXRProfier.m in Sources */,
 				5B0E844D1E218B9000F5CEBC /* NSObject+MarExtension.m in Sources */,
 				5B58A4FE1E1EB10A00713EB8 /* MARPrepareAddVehicleViewController.m in Sources */,
 				5B58A4EC1E1D830600713EB8 /* MARHighlightedButton.m in Sources */,
@@ -775,6 +794,7 @@
 				5B58A4E01E1C160000713EB8 /* AboutusViewController.m in Sources */,
 				5B58A4941E1BF37300713EB8 /* NSString+MarExtension.m in Sources */,
 				5B0E84531E22565C00F5CEBC /* MARReserveParkspacePopView.m in Sources */,
+				5B8EEF1D1E34AB480088FB0F /* MXRProfilerURLInfo.m in Sources */,
 				5B58A5041E1EB2C700713EB8 /* MARVehicleDBM.m in Sources */,
 				5B58A4E81E1D5AC600713EB8 /* MARMainViewController.m in Sources */,
 				5B0E84351E1FDFF100F5CEBC /* MARRegisterViewController.m in Sources */,

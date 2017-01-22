@@ -17,8 +17,8 @@
                             green:((float)((_hex & 0xFF00) >> 8))/255.0 \
                             blue:((float)(_hex & 0xFF))/255.0 alpha:1]
 #endif
-#ifndef RGBHEXA
-#define RGBHEXA(_hex, _alpha)    [UIColor \
+#ifndef RGBAHEX
+#define RGBAHEX(_hex, _alpha)    [UIColor \
                                 colorWithRed:((float)((_hex & 0xFF0000) >> 16))/255.0 \
                                 green:((float)((_hex & 0xFF00) >> 8))/255.0 \
                                 blue:((float)(_hex & 0xFF))/255.0 alpha:_alpha]
@@ -45,5 +45,22 @@ static inline void dispatch_sync_on_main_queue(void (^block)()) {
         dispatch_sync(dispatch_get_main_queue(), block);
     }
 }
+
+//#ifndef SINGLE_INSTANCE_USING_BLOCK
+/**
+ *  单例宏方法
+ *
+ *  @param block
+ *
+ *  @return 返回单例
+ */
+#define SINGLE_INSTANCE_USING_BLOCK(block) \
+static dispatch_once_t pred = 0; \
+static id _sharedObject = nil; \
+dispatch_once(&pred, ^{ \
+_sharedObject = block(); \
+}); \
+return _sharedObject; \
+//#endif
 
 #endif /* MXRProfilerMacro_h */

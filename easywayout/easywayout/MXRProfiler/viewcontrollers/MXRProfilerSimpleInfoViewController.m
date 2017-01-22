@@ -11,6 +11,7 @@
 #import "MXRWeakProxy.h"
 #import "MXRFPSObserver.h"
 #import "MXRProfilerMacro.h"
+#import "MXRProfilerURLProtocol.h"
 @interface MXRProfilerSimpleInfoViewController ()
 @property (nonatomic, strong) UIButton *tapButton;
 @property (nonatomic, strong) UILabel *infoLabel;
@@ -179,7 +180,7 @@
 
 - (void)buttonTap:(id)sender
 {
-    
+    NSLog(@"urlinfos : %@", MXRPROFILERVCURLMANAGER.URLInfoArray);
 }
 
 /*
