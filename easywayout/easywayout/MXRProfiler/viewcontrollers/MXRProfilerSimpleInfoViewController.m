@@ -17,10 +17,12 @@
 @property (nonatomic, strong) UILabel *infoLabel;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSByteCountFormatter *byteFormatter;
+@property (nonatomic, assign) NSInteger networkFlow;
 
 @property (nonatomic, assign) CGFloat cpuUsed;
 @property (nonatomic, assign) NSInteger fpsRate;
-@property (nonatomic, assign) CGFloat memoryUsed;
+@property (nonatomic, strong) NSString *memoryUsed;
+@property (nonatomic, strong) NSString *networkFlowVelocity;
 
 @end
 
@@ -32,6 +34,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.infoLabel];
     [self.view addSubview:self.tapButton];
+    
     self.view.backgroundColor = RGBAHEX(0x000000, 0.6);
     [self.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
     [self.timer fire];
@@ -107,6 +110,7 @@
         _infoLabel.textColor = [UIColor whiteColor];
         _infoLabel.font = [UIFont systemFontOfSize:12];
         [_infoLabel setAdjustsFontSizeToFitWidth:YES];
+        //        _infoLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _infoLabel;
 }
@@ -122,19 +126,32 @@
 - (void)setFpsRate:(NSInteger)fpsRate
 {
     _fpsRate = fpsRate;
-    [self setDisplayImediately];
+    [self setDisplayImediately];  // 需要，用的是observer
 }
 
 - (void)setCpuUsed:(CGFloat)cpuUsed
 {
     _cpuUsed = cpuUsed;
-    [self setDisplayImediately];
+    //    [self setDisplayImediately];
 }
 
-- (void)setMemoryUsed:(CGFloat)memoryUsed
+- (void)setMemoryUsed:(NSString *)memoryUsed
 {
     _memoryUsed = memoryUsed;
-    [self setDisplayImediately];
+    //    [self setDisplayImediately];
+}
+
+- (void)setNetworkFlowVelocity:(NSString *)networkFlowVelocity
+{
+    _networkFlowVelocity = networkFlowVelocity;
+}
+
+- (void)setNetworkFlow:(NSInteger)networkFlow
+{
+    if (_networkFlow != 0) {
+        self.networkFlowVelocity = [self.byteFormatter stringFromByteCount:networkFlow - _networkFlow];
+    }
+    _networkFlow = networkFlow;
 }
 
 - (void)setDisplayImediately
@@ -148,18 +165,25 @@
 - (void)_updateDisplayInfo
 {
     NSMutableString *mutableString = [NSMutableString string];
-//    [mutableString appendFormat:@"mem:%@", [self.byteFormatter stringFromByteCount:MXRProfilerResidentMemoryInBytes()]];
-    [mutableString appendFormat:@"cpu:%.f%%", self.cpuUsed * 100];
-    [mutableString appendFormat:@"\nfps:%ld", self.fpsRate];
-    [mutableString appendFormat:@"\nmem:%.f%%", self.memoryUsed * 100];
+    //    [mutableString appendFormat:@"mem:%@", [self.byteFormatter stringFromByteCount:MXRProfilerResidentMemoryInBytes()]];
+    [mutableString appendFormat:@" cpu:%.f%%", self.cpuUsed * 100];
+    [mutableString appendFormat:@"\n fps:%ld", self.fpsRate];
+    [mutableString appendFormat:@"\n mem:%@", self.memoryUsed];
+    [mutableString appendFormat:@"\n %@/s", self.networkFlowVelocity];
     self.infoLabel.text = mutableString;
 }
 
 - (void)_updateInfo
 {
+    static int networkFlows[4] = {0,0,0,0};
+    __weak __typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        self.cpuUsed = MXRProfiler_CpuUsedPercent();
-        self.memoryUsed = MXRProfiler_MemoryUsedPercent();
+        weakSelf.cpuUsed = MXRProfiler_CpuUsedPercent();
+        self.memoryUsed = [self.byteFormatter stringFromByteCount:MXRProfilerResidentMemoryInBytes()];//MXRProfiler_MemoryUsedPercent() * 100;
+        getNetworkFlows(networkFlows);
+        weakSelf.networkFlow = (NSInteger)(networkFlows[0] + networkFlows[1] + networkFlows[2] + networkFlows[3]);
+        [weakSelf setDisplayImediately];
+        
     });
 }
 
@@ -180,18 +204,18 @@
 
 - (void)buttonTap:(id)sender
 {
-    NSLog(@"urlinfos : %@", MXRPROFILERVCURLMANAGER.URLInfoArray);
+    
 }
 
 /*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
+ #pragma mark - Navigation
+ 
+ // In a storyboard-based application, you will often want to do a little preparation before navigation
+ - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+ // Get the new view controller using [segue destinationViewController].
+ // Pass the selected object to the new view controller.
+ }
+ */
 
 #pragma mark MXRProfilerMovableViewController
 

@@ -7,13 +7,16 @@
 //
 
 #import "MXRProfilerUtils.h"
+#import <UIKit/UIKit.h>
 
 #import <mach/mach.h>
 #import <mach/mach_host.h>
-
 #include <sys/sysctl.h>
 
-#import <UIKit/UIKit.h>
+#include <arpa/inet.h>
+#include <net/if.h>
+#include <ifaddrs.h>
+#include <net/if_dl.h>
 
 ///****************************************************************************************************
 /// memory
@@ -63,7 +66,7 @@ int64_t MXRProfiler_MemoryUsed()
 
 float MXRProfiler_MemoryUsedPercent()
 {
-    return (float)MXRProfiler_MemoryUsed()/MXRProfiler_MemoryTotal();
+    return (float)MXRProfilerResidentMemoryInBytes()/MXRProfiler_MemoryTotal();
 }
 
 ///****************************************************************************************************
@@ -183,4 +186,52 @@ float cpu_usage()
         return 0.0f;
     
     return tot_cpu;
+}
+
+///****************************************************************************************************
+/// networkflow
+///****************************************************************************************************
+int* getNetworkFlows(int networkFlows[])
+{
+    BOOL   success;
+    struct ifaddrs*addrs;
+    const struct ifaddrs *cursor;
+    const struct if_data *networkStatisc;
+    
+    int WiFiSent = 0;
+    int WiFiReceived = 0;
+    int WWANSent = 0;
+    int WWANReceived = 0;
+    
+    success = getifaddrs(&addrs) == 0;
+    if(success)
+    {
+        cursor = addrs;
+        while(cursor != NULL)
+        {
+            char *ifa_name = cursor->ifa_name;
+            if(cursor->ifa_addr->sa_family == AF_LINK && ifa_name)
+            {
+                if(strstr(ifa_name, "en"))
+                {
+                    networkStatisc = (const struct if_data*) cursor->ifa_data;
+                    WiFiSent += networkStatisc->ifi_obytes;
+                    WiFiReceived += networkStatisc->ifi_ibytes;
+                }
+                if(strstr(ifa_name, "pdp_ip"))
+                {
+                    networkStatisc = (const struct if_data*) cursor->ifa_data;
+                    WWANSent += networkStatisc->ifi_obytes;
+                    WWANReceived += networkStatisc->ifi_ibytes;
+                }
+            }
+            cursor = cursor->ifa_next;
+        }
+        freeifaddrs(addrs);
+    }
+    networkFlows[0] = WiFiSent;
+    networkFlows[1] = WiFiReceived;
+    networkFlows[2] = WWANSent;
+    networkFlows[3] = WWANReceived;
+    return networkFlows;
 }

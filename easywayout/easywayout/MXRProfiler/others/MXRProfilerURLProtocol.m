@@ -8,12 +8,14 @@
 
 #import "MXRProfilerURLProtocol.h"
 #import "MXRWeakProxy.h"
+#import "MXRProfilerMacro.h"
 
 NSString *const MXRPROfilerURLProkey = @"MXRPROfilerURLProkey";
 
 @interface MXRProfilerURLProtocol() <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (nonatomic,strong) NSURLConnection *connection;
+@property (nonatomic,strong) MXRProfilerURLInfo *currrentUrlInfo;
 
 @end
 
@@ -21,16 +23,29 @@ NSString *const MXRPROfilerURLProkey = @"MXRPROfilerURLProkey";
 
 + (BOOL)canInitWithRequest:(NSURLRequest *)request
 {
-    if ([NSURLProtocol propertyForKey:MXRPROfilerURLProkey inRequest:request]) {
-        return NO;
-    }
-    NSLog(@">> url : %@", request.URL.absoluteString);
-    return YES;
+    return [self canInitWithURLRequest:request];
 }
 
 + (BOOL)canInitWithTask:(NSURLSessionTask *)task
 {
-    return YES;
+    return [self canInitWithURLRequest:task.currentRequest];
+}
+
++ (BOOL)canInitWithURLRequest:(NSURLRequest*)request
+{
+    NSString *scheme = [[request URL] scheme];
+    NSLog(@">> url prerequest: %@, %@", scheme, request.URL.absoluteString);
+    if ( ([scheme caseInsensitiveCompare:@"http"]  == NSOrderedSame ||
+          [scheme caseInsensitiveCompare:@"https"] == NSOrderedSame ))
+    {
+        if ([NSURLProtocol propertyForKey:MXRPROfilerURLProkey inRequest:request]) {
+            return NO;
+        }
+        NSLog(@">> url request: %@", request.URL.absoluteString);
+        return YES;
+    }
+    return NO;
+    
 }
 
 + (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request
@@ -38,9 +53,26 @@ NSString *const MXRPROfilerURLProkey = @"MXRPROfilerURLProkey";
     return request;
 }
 
+
 + (BOOL)requestIsCacheEquivalent:(NSURLRequest *)a toRequest:(NSURLRequest *)b
 {
     return [super requestIsCacheEquivalent:a toRequest:b];
+}
+
+- (MXRProfilerURLInfo *)currrentUrlInfo
+{
+    if (!_currrentUrlInfo) {
+        _currrentUrlInfo = [[MXRProfilerURLInfo alloc] init];
+    }
+    return _currrentUrlInfo;
+}
+
+- (NSString *)urlStrWithoutParamsWithUrlStr:(NSString *)url
+{
+    if ([url rangeOfString:@"?"].location != NSNotFound) {
+        return [url componentsSeparatedByString:@"?"][0];
+    }
+    return url;
 }
 
 - (void)startLoading;
@@ -54,17 +86,16 @@ NSString *const MXRPROfilerURLProkey = @"MXRPROfilerURLProkey";
     //    self.connection = [NSURLConnection connectionWithRequest:mutableReqeust delegate:self];
     
     self.connection = [NSURLConnection connectionWithRequest:mutableReqeust delegate:[MXRWeakProxy proxyWithTarget:self]];
-
+    NSLog(@">> url start: %@", self.request.URL);
+    [self.currrentUrlInfo resetInfo];
+    self.currrentUrlInfo.preURLString = [self urlStrWithoutParamsWithUrlStr:mutableReqeust.URL.absoluteString];
+    self.currrentUrlInfo.absoluteURLString = mutableReqeust.URL.absoluteString;
+    self.currrentUrlInfo.requestSize = mutableReqeust.HTTPBody.length;
+    self.currrentUrlInfo.requestCount = 1;
+    [MXRPROFILERVCURLMANAGER addURLInfo:self.currrentUrlInfo];
+    
 }
 
-/*!
- @method stopLoading
- @abstract Stops protocol-specific loading of a request.
- @discussion When this method is called, the protocol implementation
- should end the work of loading a request. This could be in response
- to a cancel operation, so protocol implementations must be able to
- handle this call while a load is in progress.
- */
 - (void)stopLoading
 {
     if (self.connection) {
@@ -88,8 +119,10 @@ NSString *const MXRPROfilerURLProkey = @"MXRPROfilerURLProkey";
 }
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     //正在接收数据
-
     [self.client URLProtocol:self didLoadData:data];
+    
+    self.currrentUrlInfo.responseSize = data.length;
+    [MXRPROFILERVCURLMANAGER updateURLInfo:self.currrentUrlInfo];
 }
 -(void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
     //接收数据失败
@@ -113,18 +146,21 @@ NSString *const MXRPROfilerURLProkey = @"MXRPROfilerURLProkey";
 {
     _urlInfo.VCClassString = self.currentVCClassName;
     _urlInfo.VCTitle = self.currentVCTitle;
-    NSUInteger index = [self.URLInfoArray indexOfObject:_urlInfo];
-    if (index == NSNotFound) {
-        MXRProfilerURLInfo *urlInfo = [_urlInfo copy];
-        [self.URLInfoArray addObject:urlInfo];
-    }
-    else
-    {
-        MXRProfilerURLInfo *urlInfo = [self.URLInfoArray objectAtIndex:index];
-        urlInfo.requestSize += _urlInfo.requestSize;
-        urlInfo.responseSize += _urlInfo.responseSize;
-        urlInfo.requestCount ++;
-    }
+    MXRProfilerURLInfo *urlInfo = [_urlInfo copy];
+    [self.URLInfoArray addObject:urlInfo];
+    
+    //    NSUInteger index = [self.URLInfoArray indexOfObject:_urlInfo];
+    //    if (index == NSNotFound) {
+    //        MXRProfilerURLInfo *urlInfo = [_urlInfo copy];
+    //        [self.URLInfoArray addObject:urlInfo];
+    //    }
+    //    else
+    //    {
+    //        MXRProfilerURLInfo *urlInfo = [self.URLInfoArray objectAtIndex:index];
+    //        urlInfo.requestSize += _urlInfo.requestSize;
+    //        urlInfo.responseSize += _urlInfo.responseSize;
+    //        urlInfo.requestCount ++;
+    //    }
 }
 
 - (void)updateURLInfo:(MXRProfilerURLInfo *)_urlInfo
@@ -132,15 +168,16 @@ NSString *const MXRPROfilerURLProkey = @"MXRPROfilerURLProkey";
     _urlInfo.VCClassString = self.currentVCClassName;
     _urlInfo.VCTitle = self.currentVCTitle;
     NSUInteger index = [self.URLInfoArray indexOfObject:_urlInfo];
-    if (index == NSNotFound) {
-        MXRProfilerURLInfo *urlInfo = [_urlInfo copy];
-        [self.URLInfoArray addObject:urlInfo];
-    }
-    else
-    {
+    if (index != NSNotFound) {
         MXRProfilerURLInfo *urlInfo = [self.URLInfoArray objectAtIndex:index];
         urlInfo.responseSize += _urlInfo.responseSize;
     }
+    
+    //    else
+    //    {
+    //        MXRProfilerURLInfo *urlInfo = [_urlInfo copy];
+    //        [self.URLInfoArray addObject:urlInfo];
+    //    }
 }
 
 - (NSMutableArray *)URLInfoArray

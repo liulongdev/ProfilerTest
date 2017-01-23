@@ -12,11 +12,14 @@
 
 @property (nonatomic, strong) NSString *preURLString;         //
 @property (nonatomic, strong) NSString *absoluteURLString;
-@property (nonatomic, strong) NSString *VCClassString;@property (nonatomic, strong) NSString *VCTitle;
+@property (nonatomic, strong) NSString *VCClassString;
+@property (nonatomic, strong) NSString *VCTitle;
 @property (nonatomic, assign) NSUInteger requestCount;
 @property (nonatomic, assign) NSUInteger requestSize;
 @property (nonatomic, assign) NSUInteger responseSize;
 
 @property (nonatomic, assign) NSUInteger requestDateTimeIntervalSince1970;
 @property (nonatomic, assign) NSUInteger finishLodadDateTimeIntervalSince1970;
+
+- (void)resetInfo;
 @end

@@ -52,7 +52,7 @@ static const NSUInteger kFBFloatingButtonSize = 100.0;
                                            withSize:CGSizeMake(kFBFloatingButtonSize,
                                                                kFBFloatingButtonSize)];
     [[MXRMonitorRunloop sharedInstance] startMonitor];
-    [NSURLProtocol registerClass:[MXRProfilerURLProtocol class]];
+//    [NSURLProtocol registerClass:[MXRProfilerURLProtocol class]];
 }
 
 - (void)endAnalyze
