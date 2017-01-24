@@ -216,4 +216,66 @@ CGFloat MXRProfilerRoundPixelValue(CGFloat value)
                      }];
 }
 
+
+- (UIViewController *)_viewControllerDecidingAboutRotations
+{
+#if _INTERNAL_IMP_ENABLED
+    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    UIViewController *viewController = window.rootViewController;
+    SEL viewControllerForSupportedInterfaceOrientationsSelector =
+    NSSelectorFromString(@"_viewControllerForSupportedInterfaceOrientations");
+    if ([viewController respondsToSelector:viewControllerForSupportedInterfaceOrientationsSelector]) {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+        viewController = [viewController performSelector:viewControllerForSupportedInterfaceOrientationsSelector];
+#pragma clang diagnostic pop
+    }
+    return viewController;
+#else
+    return self;
+#endif // _INTERNAL_IMP_ENABLED
+}
+
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations
+{
+    UIViewController *viewControllerToAsk = [self _viewControllerDecidingAboutRotations];
+    UIInterfaceOrientationMask supportedOrientations = UIInterfaceOrientationMaskAll;
+    if (viewControllerToAsk && viewControllerToAsk != self) {
+        supportedOrientations = [viewControllerToAsk supportedInterfaceOrientations];
+    }
+    
+    return supportedOrientations;
+}
+
+- (BOOL)shouldAutorotate
+{
+    UIViewController *viewControllerToAsk = [self _viewControllerDecidingAboutRotations];
+    BOOL shouldAutorotate = YES;
+    if (viewControllerToAsk && viewControllerToAsk != self) {
+        shouldAutorotate = [viewControllerToAsk shouldAutorotate];
+    }
+    return shouldAutorotate;
+}
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+                                         duration:(NSTimeInterval)duration
+{
+    // We did rotate, we should update frame of contained window (it was depending on bounds)
+    CGSize adjustedSize = CGSizeMake(MIN(_size.width, CGRectGetWidth(self.view.bounds)),
+                                     MIN(_size.height, CGRectGetHeight(self.view.bounds)));
+    
+    CGFloat widthOffset = MIN(_presentedViewController.view.frame.origin.x,
+                              CGRectGetWidth(self.view.bounds) - adjustedSize.width);
+    CGFloat heightOffset = MIN(_presentedViewController.view.frame.origin.y,
+                               CGRectGetHeight(self.view.bounds) - adjustedSize.height);
+    
+    CGRect frame = CGRectMake(widthOffset, heightOffset, adjustedSize.width, adjustedSize.height);
+    
+    [UIView animateWithDuration:duration animations:^{
+        _presentedViewController.view.frame = frame;
+    }];
+    
+}
+
+
 @end
