@@ -55,6 +55,11 @@
 		5B8215761E1846EB0070BA88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B8215741E1846EB0070BA88 /* LaunchScreen.storyboard */; };
 		5B8215811E1846EC0070BA88 /* easywayoutTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8215801E1846EC0070BA88 /* easywayoutTests.m */; };
 		5B82158C1E1846EC0070BA88 /* easywayoutUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B82158B1E1846EC0070BA88 /* easywayoutUITests.m */; };
+		5B8BAA8C1E3830B3002A99DB /* MXRProfilerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8BAA8B1E3830B3002A99DB /* MXRProfilerInfo.m */; };
+		5B8BAA8F1E38352A002A99DB /* MXRProfilerStandstillInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8BAA8E1E38352A002A99DB /* MXRProfilerStandstillInfo.m */; };
+		5B8BAA9B1E384C90002A99DB /* MXRProfilerStandstillListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8BAA9A1E384C90002A99DB /* MXRProfilerStandstillListViewController.m */; };
+		5B8BAAA51E387975002A99DB /* MXRProfilerStandstillListView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8BAAA41E387975002A99DB /* MXRProfilerStandstillListView.m */; };
+		5B8BAAA81E387BFF002A99DB /* MXRProfilerBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8BAAA71E387BFF002A99DB /* MXRProfilerBaseViewController.m */; };
 		5B8EEF141E348CD80088FB0F /* UIViewController+MXRProfier.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8EEF131E348CD80088FB0F /* UIViewController+MXRProfier.m */; };
 		5B8EEF1D1E34AB480088FB0F /* MXRProfilerURLInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 5B8EEF1C1E34AB480088FB0F /* MXRProfilerURLInfo.m */; };
 		5BBAAC4B1E2CFC8600B3A6B8 /* CacheCleanerPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BBAAC481E2CFC8600B3A6B8 /* CacheCleanerPlugin.m */; };
@@ -175,6 +180,18 @@
 		5B82158B1E1846EC0070BA88 /* easywayoutUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = easywayoutUITests.m; sourceTree = "<group>"; };
 		5B82158D1E1846EC0070BA88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B8215991E18504D0070BA88 /* easywayout-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "easywayout-Prefix.pch"; sourceTree = "<group>"; };
+		5B8BAA8A1E3830B3002A99DB /* MXRProfilerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerInfo.h; sourceTree = "<group>"; };
+		5B8BAA8B1E3830B3002A99DB /* MXRProfilerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerInfo.m; sourceTree = "<group>"; };
+		5B8BAA8D1E38352A002A99DB /* MXRProfilerStandstillInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerStandstillInfo.h; sourceTree = "<group>"; };
+		5B8BAA8E1E38352A002A99DB /* MXRProfilerStandstillInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerStandstillInfo.m; sourceTree = "<group>"; };
+		5B8BAA901E383E63002A99DB /* MXRProfilerNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerNotification.h; sourceTree = "<group>"; };
+		5B8BAA991E384C90002A99DB /* MXRProfilerStandstillListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerStandstillListViewController.h; sourceTree = "<group>"; };
+		5B8BAA9A1E384C90002A99DB /* MXRProfilerStandstillListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerStandstillListViewController.m; sourceTree = "<group>"; };
+		5B8BAA9C1E384F34002A99DB /* MXRProfilerPresentationModeDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerPresentationModeDelegate.h; sourceTree = "<group>"; };
+		5B8BAAA31E387975002A99DB /* MXRProfilerStandstillListView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerStandstillListView.h; sourceTree = "<group>"; };
+		5B8BAAA41E387975002A99DB /* MXRProfilerStandstillListView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerStandstillListView.m; sourceTree = "<group>"; };
+		5B8BAAA61E387BFF002A99DB /* MXRProfilerBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerBaseViewController.h; sourceTree = "<group>"; };
+		5B8BAAA71E387BFF002A99DB /* MXRProfilerBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MXRProfilerBaseViewController.m; sourceTree = "<group>"; };
 		5B8EEF121E348CD80088FB0F /* UIViewController+MXRProfier.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+MXRProfier.h"; sourceTree = "<group>"; };
 		5B8EEF131E348CD80088FB0F /* UIViewController+MXRProfier.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+MXRProfier.m"; sourceTree = "<group>"; };
 		5B8EEF1B1E34AB480088FB0F /* MXRProfilerURLInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MXRProfilerURLInfo.h; sourceTree = "<group>"; };
@@ -484,11 +501,30 @@
 			path = easywayoutUITests;
 			sourceTree = "<group>";
 		};
+		5B8BAA971E384886002A99DB /* view */ = {
+			isa = PBXGroup;
+			children = (
+				5B8BAA981E384886002A99DB /* cell */,
+				5B8BAAA31E387975002A99DB /* MXRProfilerStandstillListView.h */,
+				5B8BAAA41E387975002A99DB /* MXRProfilerStandstillListView.m */,
+			);
+			path = view;
+			sourceTree = "<group>";
+		};
+		5B8BAA981E384886002A99DB /* cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = cell;
+			sourceTree = "<group>";
+		};
 		5B8EEF1A1E34AB130088FB0F /* model */ = {
 			isa = PBXGroup;
 			children = (
 				5B8EEF1B1E34AB480088FB0F /* MXRProfilerURLInfo.h */,
 				5B8EEF1C1E34AB480088FB0F /* MXRProfilerURLInfo.m */,
+				5B8BAA8D1E38352A002A99DB /* MXRProfilerStandstillInfo.h */,
+				5B8BAA8E1E38352A002A99DB /* MXRProfilerStandstillInfo.m */,
 			);
 			path = model;
 			sourceTree = "<group>";
@@ -544,6 +580,10 @@
 				AAEA28381E30B6AC00722A88 /* MXRProfilerURLProtocol.m */,
 				5B8EEF121E348CD80088FB0F /* UIViewController+MXRProfier.h */,
 				5B8EEF131E348CD80088FB0F /* UIViewController+MXRProfier.m */,
+				5B8BAA8A1E3830B3002A99DB /* MXRProfilerInfo.h */,
+				5B8BAA8B1E3830B3002A99DB /* MXRProfilerInfo.m */,
+				5B8BAA901E383E63002A99DB /* MXRProfilerNotification.h */,
+				5B8BAA9C1E384F34002A99DB /* MXRProfilerPresentationModeDelegate.h */,
 			);
 			path = others;
 			sourceTree = "<group>";
@@ -551,8 +591,13 @@
 		5BBAAC621E2D263700B3A6B8 /* viewcontrollers */ = {
 			isa = PBXGroup;
 			children = (
+				5B8BAA971E384886002A99DB /* view */,
+				5B8BAAA61E387BFF002A99DB /* MXRProfilerBaseViewController.h */,
+				5B8BAAA71E387BFF002A99DB /* MXRProfilerBaseViewController.m */,
 				5BBAAC631E2D265600B3A6B8 /* MXRProfilerSimpleInfoViewController.h */,
 				5BBAAC641E2D265600B3A6B8 /* MXRProfilerSimpleInfoViewController.m */,
+				5B8BAA991E384C90002A99DB /* MXRProfilerStandstillListViewController.h */,
+				5B8BAA9A1E384C90002A99DB /* MXRProfilerStandstillListViewController.m */,
 			);
 			path = viewcontrollers;
 			sourceTree = "<group>";
@@ -762,6 +807,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B8BAAA51E387975002A99DB /* MXRProfilerStandstillListView.m in Sources */,
 				AAEA27FA1E3054C000722A88 /* MXRMonitorRunloop.m in Sources */,
 				5B58A5011E1EB17A00713EB8 /* MARAddVehicleViewController.m in Sources */,
 				5B58A48A1E1BEC1E00713EB8 /* MARGlobalManager.m in Sources */,
@@ -776,6 +822,7 @@
 				5B0E84441E203E7100F5CEBC /* MarReserveParkSpaceViewController.m in Sources */,
 				5BBAAC591E2D15D300B3A6B8 /* MXRProfilerTool.m in Sources */,
 				5B58A4911E1BF0A800713EB8 /* SVProgressHUD+MarExtension.m in Sources */,
+				5B8BAA8F1E38352A002A99DB /* MXRProfilerStandstillInfo.m in Sources */,
 				5B0E84501E218D6000F5CEBC /* BMKMapView+MAREX.m in Sources */,
 				5B0E84471E203ED600F5CEBC /* MARReserveParkSpaceResultViewController.m in Sources */,
 				5B0E84321E1EC40C00F5CEBC /* MARMyVehicleViewController.m in Sources */,
@@ -789,9 +836,11 @@
 				5B0E844A1E21696700F5CEBC /* MARMainLogicBaseVC.m in Sources */,
 				5BBAAC4B1E2CFC8600B3A6B8 /* CacheCleanerPlugin.m in Sources */,
 				5B0E843E1E20182B00F5CEBC /* MARVerifyPhoneCodeViewController.m in Sources */,
+				5B8BAAA81E387BFF002A99DB /* MXRProfilerBaseViewController.m in Sources */,
 				5B82156B1E1846EB0070BA88 /* AppDelegate.mm in Sources */,
 				5B58A4F71E1E96BB00713EB8 /* MARVehicle.m in Sources */,
 				5B58A4E01E1C160000713EB8 /* AboutusViewController.m in Sources */,
+				5B8BAA8C1E3830B3002A99DB /* MXRProfilerInfo.m in Sources */,
 				5B58A4941E1BF37300713EB8 /* NSString+MarExtension.m in Sources */,
 				5B0E84531E22565C00F5CEBC /* MARReserveParkspacePopView.m in Sources */,
 				5B8EEF1D1E34AB480088FB0F /* MXRProfilerURLInfo.m in Sources */,
@@ -800,6 +849,7 @@
 				5B0E84351E1FDFF100F5CEBC /* MARRegisterViewController.m in Sources */,
 				AAEA28391E30B6AC00722A88 /* MXRProfilerURLProtocol.m in Sources */,
 				5B58A4891E1BEC1E00713EB8 /* MARBaseViewController.m in Sources */,
+				5B8BAA9B1E384C90002A99DB /* MXRProfilerStandstillListViewController.m in Sources */,
 				5B58A4F01E1E94B600713EB8 /* MARBaseDBModel.m in Sources */,
 				AAECC5AC1E2DB3ED007E662F /* MXRFPSObserver.m in Sources */,
 				5B8215681E1846EB0070BA88 /* main.m in Sources */,

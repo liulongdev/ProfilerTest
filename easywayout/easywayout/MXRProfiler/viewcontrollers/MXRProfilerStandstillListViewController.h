@@ -1,8 +1,8 @@
 //
-//  MXRProfilerSimpleInfoViewController.h
+//  MXRProfilerStandstillListViewController.h
 //  easywayout
 //
-//  Created by Martin.Liu on 2017/1/17.
+//  Created by Martin.Liu on 2017/1/25.
 //  Copyright © 2017年 MAIERSI. All rights reserved.
 //
 
@@ -11,7 +11,7 @@
 #import "MXRProfilerMovableViewController.h"
 #import "MXRProfilerPresentationModeDelegate.h"
 
-@interface MXRProfilerSimpleInfoViewController : MXRProfilerBaseViewController <MXRProfilerMovableViewController>
+@interface MXRProfilerStandstillListViewController : MXRProfilerBaseViewController <MXRProfilerMovableViewController>
 
 @property (nonatomic, weak) id<MXRProfilerPresentationModeDelegate> delegate;
 

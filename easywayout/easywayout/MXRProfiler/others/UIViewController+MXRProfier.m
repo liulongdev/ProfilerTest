@@ -7,7 +7,8 @@
 //
 
 #import "UIViewController+MXRProfier.h"
-#import "MXRProfilerURLProtocol.h"
+#import "MXRProfilerBaseViewController.h"
+#import "MXRProfilerInfo.h"
 #import <objc/runtime.h>
 
 @implementation UIViewController (MXRProfier)
@@ -24,8 +25,12 @@
 - (void)mxr_swizzled_viewWillAppear:(BOOL)animated
 {
     [self mxr_swizzled_viewWillAppear:animated];
-    if (![self isKindOfClass:[UINavigationController class]] && ![self isKindOfClass:[UITabBarController class]]) {
-        MXRPROFILERVCURLMANAGER.currentVCClassName = NSStringFromClass(self.class);
+    BOOL isMXRProfilerVC = [self isKindOfClass:[MXRProfilerBaseViewController class]];
+    BOOL isNavi = [self isKindOfClass:[UINavigationController class]];
+    BOOL isTabbar = [self isKindOfClass:[UITabBarController class]];
+    BOOL shouldUpdateVCName = !(isMXRProfilerVC || isNavi || isTabbar);
+    if (shouldUpdateVCName) {
+        MXRPROFILERINFO.currentVCClassName = NSStringFromClass(self.class);
     }
 }
 

@@ -157,7 +157,7 @@
 - (void)setDisplayImediately
 {
     __weak __typeof(self) weakSelf = self;
-    dispatch_async_on_main_queue(^{
+    mxr_dispatch_async_on_main_queue(^{
         [weakSelf _updateDisplayInfo];
     });
 }
@@ -204,7 +204,10 @@
 
 - (void)buttonTap:(id)sender
 {
-    
+    NSLog(@"standstaills : %@", MXRPROFILERINFO.standstaillInfos);
+    if ([_delegate respondsToSelector:@selector(presentationDelegateChangePresentationModeToMode:)]) {
+        [_delegate presentationDelegateChangePresentationModeToMode:MXRProfilerPresentationMode_Standstill];
+    }
 }
 
 /*

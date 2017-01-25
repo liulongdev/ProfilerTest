@@ -7,8 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MXRProfilerPresentationModeDelegate.h"
 
 @interface MXRProfilerTool : NSObject
+
+@property (nonatomic, assign) MXRProfilerPresentationMode presentationMode;
 
 - (void)startAnalyze;
 

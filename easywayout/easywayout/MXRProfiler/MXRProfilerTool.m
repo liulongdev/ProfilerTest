@@ -11,12 +11,17 @@
 #import "MXRProfilerWindowTouchesHandling.h"
 #import "MXRProfilerContainerViewController.h"
 #import "MXRProfilerSimpleInfoViewController.h"
+#import "MXRProfilerStandstillListViewController.h"
 #import "MXRMonitorRunloop.h"
 #import "MXRProfilerURLProtocol.h"
+#import "MXRProfilerInfo.h"
+#import "MXRProfilerStandstillInfo.h"
+#import "MXRCallStack.h"
 
-static const NSUInteger kFBFloatingButtonSize = 100.0;
+static const NSUInteger kMXRSimpleVCHeight = 100.0;
+static const NSUInteger kMXRStandstaillVCHeight = 250;
 
-@interface MXRProfilerTool() <MXRProfilerWindowTouchesHandling>
+@interface MXRProfilerTool() <MXRProfilerWindowTouchesHandling, MXRProfilerPresentationModeDelegate>
 
 @property (nonatomic, strong) MXRProfilerWindow *profilerWindow;
 
@@ -27,6 +32,7 @@ static const NSUInteger kFBFloatingButtonSize = 100.0;
     MXRProfilerContainerViewController *_containerViewController;
     
     MXRProfilerSimpleInfoViewController *_simpleInfoViewController;
+    MXRProfilerStandstillListViewController *_standstillListViewController;
 }
 
 - (MXRProfilerWindow *)profilerWindow
@@ -47,11 +53,20 @@ static const NSUInteger kFBFloatingButtonSize = 100.0;
     
     [_containerViewController dismissCurrentViewController];
     _simpleInfoViewController = [MXRProfilerSimpleInfoViewController new];
-    
+    _simpleInfoViewController.delegate = self;
     [_containerViewController presentViewController:_simpleInfoViewController
-                                           withSize:CGSizeMake(kFBFloatingButtonSize,
-                                                               kFBFloatingButtonSize)];
+                                           withSize:CGSizeMake(kMXRSimpleVCHeight,
+                                                               kMXRSimpleVCHeight)];
     [[MXRMonitorRunloop sharedInstance] startMonitor];
+    [MXRMonitorRunloop sharedInstance].callbackWhenStandStill = ^{
+        MXRProfilerStandstillInfo *standstaillInfo = [MXRProfilerStandstillInfo new];
+        standstaillInfo.happendTimeIntervalSince1970 = [[NSDate new] timeIntervalSince1970];
+        standstaillInfo.currentVCClassName = MXRPROFILERINFO.currentVCClassName;
+        standstaillInfo.mainTreadCallStack = [MXRCallStack mxr_backtraceOfMainThread];
+        [MXRPROFILERINFO.standstaillInfos addObject:standstaillInfo];
+//        standstaillInfo.allTreadCallStack = [MXRCallStack mxr_backtraceOfAllThread];
+    };
+
 //    [NSURLProtocol registerClass:[MXRProfilerURLProtocol class]];
 }
 
@@ -61,12 +76,55 @@ static const NSUInteger kFBFloatingButtonSize = 100.0;
     [NSURLProtocol unregisterClass:[MXRProfilerURLProtocol class]];
 }
 
+- (void)setPresentationMode:(MXRProfilerPresentationMode)presentationMode
+{
+    _presentationMode = presentationMode;
+    switch (presentationMode) {
+        case MXRProfilerPresentationMode_SimpleInfo:
+        {
+            [_containerViewController dismissCurrentViewController];
+            _standstillListViewController = nil;
+            _simpleInfoViewController = [MXRProfilerSimpleInfoViewController new];
+            _simpleInfoViewController.delegate = self;
+            [_containerViewController presentViewController:_simpleInfoViewController
+                                                   withSize:CGSizeMake(kMXRSimpleVCHeight,
+                                                                       kMXRSimpleVCHeight)];
+        }
+            break;
+        case MXRProfilerPresentationMode_Standstill:
+        {
+            [_containerViewController dismissCurrentViewController];
+            _simpleInfoViewController = nil;
+            _standstillListViewController = [MXRProfilerStandstillListViewController new];
+            _standstillListViewController.delegate = self;
+            [_containerViewController presentViewController:_standstillListViewController withSize:CGSizeMake(FLT_MAX, kMXRStandstaillVCHeight)];
+        }
+            break;
+    }
+}
+
+#pragma mark - MXRProfilerPresentationModeDelegate
+- (void)presentationDelegateChangePresentationModeToMode:(MXRProfilerPresentationMode)mode
+{
+    self.presentationMode = mode;
+}
+
 #pragma mark - MXRProfilerWindowTouchesHandling
 - (BOOL)mxr_window:(UIWindow *)window shouldReceiveTouchAtPoint:(CGPoint)point
 {
-    return CGRectContainsPoint(_simpleInfoViewController.view.bounds,
-                               [_simpleInfoViewController.view convertPoint:point
-                                                                 fromView:window]);
+    switch (self.presentationMode) {
+        case MXRProfilerPresentationMode_SimpleInfo:
+            return CGRectContainsPoint(_simpleInfoViewController.view.bounds,
+                                [_simpleInfoViewController.view convertPoint:point
+                                                                    fromView:window]);
+
+            break;
+        case MXRProfilerPresentationMode_Standstill:
+            return CGRectContainsPoint(_standstillListViewController.view.bounds,
+                                [_standstillListViewController.view convertPoint:point
+                                                                    fromView:window]);
+    }
+    return YES;
 }
 
 @end
