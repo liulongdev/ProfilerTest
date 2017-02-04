@@ -7,6 +7,7 @@
 //
 
 #import "MXRProfilerInfo.h"
+#import "MXRProfilerMacro.h"
 
 @implementation MXRProfilerInfo
 
