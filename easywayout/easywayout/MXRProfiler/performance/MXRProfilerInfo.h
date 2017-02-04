@@ -16,7 +16,8 @@
 
 @property (nonatomic, strong) NSMutableArray *standstaillInfos;
 
-+ (instancetype)sharedInstance;
+@property (nonatomic, assign) BOOL standstaillSign;
 
++ (instancetype)sharedInstance;
 
 @end

@@ -12,12 +12,16 @@
 #import "MXRFPSObserver.h"
 #import "MXRProfilerMacro.h"
 #import "MXRProfilerURLProtocol.h"
+
+static const CGFloat MXRProfierSignWidth = 15;
+
 @interface MXRProfilerSimpleInfoViewController ()
 @property (nonatomic, strong) UIButton *tapButton;
 @property (nonatomic, strong) UILabel *infoLabel;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) NSByteCountFormatter *byteFormatter;
 @property (nonatomic, assign) NSInteger networkFlow;
+@property (nonatomic, strong) UIView *standstillSignView;
 
 @property (nonatomic, assign) CGFloat cpuUsed;
 @property (nonatomic, assign) NSInteger fpsRate;
@@ -34,6 +38,7 @@
     [super viewDidLoad];
     [self.view addSubview:self.infoLabel];
     [self.view addSubview:self.tapButton];
+    [self.view addSubview:self.standstillSignView];
     
     self.view.backgroundColor = RGBAHEX(0x000000, 0.6);
     [self.view addObserver:self forKeyPath:@"frame" options:NSKeyValueObservingOptionNew context:nil];
@@ -49,13 +54,15 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    _standstillSignView.hidden = MXRPROFILERINFO.standstaillSign != YES;
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(monitorStandstillHappend) name:MXRPROFILERNOTIFICATION_HAPPENSTANDSTILL object:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:MXRPROFILERNOTIFICATION_HAPPENSTANDSTILL object:nil];
 }
 
 - (void)dealloc
@@ -113,6 +120,18 @@
         //        _infoLabel.textAlignment = NSTextAlignmentCenter;
     }
     return _infoLabel;
+}
+
+- (UIView *)standstillSignView
+{
+    if (!_standstillSignView) {
+        _standstillSignView = [[UIView alloc] init];
+        _standstillSignView.backgroundColor = [UIColor redColor];
+        _standstillSignView.hidden = NO;
+        _standstillSignView.layer.masksToBounds = YES;
+        _standstillSignView.layer.cornerRadius = MXRProfierSignWidth / 2;
+    }
+    return _standstillSignView;
 }
 
 - (NSByteCountFormatter *)byteFormatter
@@ -195,6 +214,7 @@
         CGRect newFrame = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
         _infoLabel.frame = newFrame;
         _tapButton.frame = newFrame;
+        _standstillSignView.frame = CGRectMake(newFrame.size.width - MXRProfierSignWidth - 5, 5, MXRProfierSignWidth, MXRProfierSignWidth);
     }
     else if ([keyPath isEqualToString:@"fpsRate"]) {
         NSInteger fpsRate = [change[NSKeyValueChangeNewKey] integerValue];
@@ -208,6 +228,12 @@
     if ([_delegate respondsToSelector:@selector(presentationDelegateChangePresentationModeToMode:)]) {
         [_delegate presentationDelegateChangePresentationModeToMode:MXRProfilerPresentationMode_Standstill];
     }
+}
+
+- (void)monitorStandstillHappend
+{
+    MXRPROFILERINFO.standstaillSign = YES;
+    _standstillSignView.hidden = NO;
 }
 
 /*

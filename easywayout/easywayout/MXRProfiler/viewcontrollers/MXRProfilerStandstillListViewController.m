@@ -9,6 +9,8 @@
 #import "MXRProfilerStandstillListViewController.h"
 #import "MXRProfilerMacro.h"
 #import "MXRProfilerStandstillListView.h"
+#import "MXRProfilerStandstillDetailViewController.h"
+
 @interface MXRProfilerStandstillListViewController () <UITableViewDelegate, UITableViewDataSource>
 {
     MXRProfilerStandstillListView *_standstillListView;
@@ -98,6 +100,28 @@
     cell.textLabel.text = standstillInfo.currentVCClassName;
     cell.detailTextLabel.text = [self.dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:standstillInfo.happendTimeIntervalSince1970]];
     return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSInteger index = indexPath.row;
+    MXRProfilerStandstillInfo *standstillInfo = nil;
+    if (index < MXRPROFILERINFO.standstaillInfos.count) {
+        standstillInfo = MXRPROFILERINFO.standstaillInfos[index];
+        MXRProfilerStandstillDetailViewController *standstillDetailVC = [MXRProfilerStandstillDetailViewController new];
+        standstillDetailVC.standstillInfo = standstillInfo;
+//        [self.navigationController pushViewController:standstillDetailVC animated:YES];
+        [self addChildViewController:standstillDetailVC];
+        standstillDetailVC.view.frame = self.view.bounds;
+        standstillDetailVC.view.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+        [self.view addSubview:standstillDetailVC.view];
+        [standstillDetailVC didMoveToParentViewController:self];
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 25;
 }
 
 #pragma mark MXRProfilerMovableViewController

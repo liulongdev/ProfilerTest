@@ -17,6 +17,7 @@
 #import "MXRProfilerInfo.h"
 #import "MXRProfilerStandstillInfo.h"
 #import "MXRCallStack.h"
+#import "MXRProfilerMacro.h"
 
 static const NSUInteger kMXRSimpleVCHeight = 100.0;
 static const NSUInteger kMXRStandstaillVCHeight = 250;
@@ -66,8 +67,16 @@ static const NSUInteger kMXRStandstaillVCHeight = 250;
         [MXRPROFILERINFO.standstaillInfos addObject:standstaillInfo];
 //        standstaillInfo.allTreadCallStack = [MXRCallStack mxr_backtraceOfAllThread];
     };
-
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(monitorStandstillHappend) name:MXRPROFILERNOTIFICATION_HAPPENSTANDSTILL object:nil];
 //    [NSURLProtocol registerClass:[MXRProfilerURLProtocol class]];
+}
+
+- (void)monitorStandstillHappend
+{
+    if (self.presentationMode != MXRProfilerPresentationMode_Standstill) {
+        MXRPROFILERINFO.standstaillSign = YES;
+    }
 }
 
 - (void)endAnalyze
@@ -93,6 +102,7 @@ static const NSUInteger kMXRStandstaillVCHeight = 250;
             break;
         case MXRProfilerPresentationMode_Standstill:
         {
+            MXRPROFILERINFO.standstaillSign = NO;
             [_containerViewController dismissCurrentViewController];
             _simpleInfoViewController = nil;
             _standstillListViewController = [MXRProfilerStandstillListViewController new];

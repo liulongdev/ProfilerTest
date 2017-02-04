@@ -45,9 +45,9 @@ static const CGFloat kMXRProfilerStandstaillListView_CommonButtonWidth = 100;
     [super layoutSubviews];
     
     _headerView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), kMXRProfilerStandstaillListView_HeaderViewHeight);
-    _clearButton.frame = CGRectMake(15, (kMXRProfilerStandstaillListView_HeaderViewHeight - kMXRProfilerStandstaillListView_CommonButtonHeight) / 2, kMXRProfilerStandstaillListView_CommonButtonWidth, kMXRProfilerStandstaillListView_CommonButtonHeight);
+    _hiddenButton.frame = CGRectMake(15, (kMXRProfilerStandstaillListView_HeaderViewHeight - kMXRProfilerStandstaillListView_CommonButtonHeight) / 2, kMXRProfilerStandstaillListView_CommonButtonWidth, kMXRProfilerStandstaillListView_CommonButtonHeight);
     
-    _hiddenButton.frame = CGRectMake(MIN(30 + CGRectGetMaxX(_clearButton.bounds), CGRectGetWidth(self.bounds) - 15 - kMXRProfilerStandstaillListView_CommonButtonWidth) , (kMXRProfilerStandstaillListView_HeaderViewHeight - kMXRProfilerStandstaillListView_CommonButtonHeight) / 2, kMXRProfilerStandstaillListView_CommonButtonWidth, kMXRProfilerStandstaillListView_CommonButtonHeight);
+    _clearButton.frame = CGRectMake(MIN(30 + CGRectGetMaxX(_hiddenButton.bounds), CGRectGetWidth(self.bounds) - 15 - kMXRProfilerStandstaillListView_CommonButtonWidth) , (kMXRProfilerStandstaillListView_HeaderViewHeight - kMXRProfilerStandstaillListView_CommonButtonHeight) / 2, kMXRProfilerStandstaillListView_CommonButtonWidth, kMXRProfilerStandstaillListView_CommonButtonHeight);
     
     _tableView.frame = CGRectMake(0, CGRectGetHeight(_headerView.frame), CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds) - kMXRProfilerStandstaillListView_HeaderViewHeight);
 }
